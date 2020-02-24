@@ -1,14 +1,14 @@
-let rA = 400;
-let rB = 400;
 
+function calculateElo(rankA, rankB, resultA, resultB) {
 
-let eA = 1 / ( 1 + (10 ^ ( (rB-rA) / 400)));
-let eB = 1 / ( 1 + (10 ^ ( (rA-rB) / 400)));
+	expectedA = 1 / ( 1 + (10 ^ ( (rankB-rankA) / 400)));
+	expectedB = 1 / ( 1 + (10 ^ ( (rankA-rankB) / 400)));
+	
+	newRankA = rankA + (16 * (resultA - expectedA));
+	newRankB = rankB + (16 * (resultB - expectedB));
 
-//A won
-new_rA = rA + (16 * (1 - eA));
-new_rB = rB + (16 * (0 - eB));
-
-console.log(Math.floor(new_rA));
-console.log(Math.floor(new_rB));
-
+	return {
+		    "newRankA":Math.floor(newRankA),
+		    "newRankB":Math.floor(newRankB)
+		}
+}
