@@ -12,7 +12,7 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use('/users', routes.user);
 app.use('/mock/users', routes.mockUser);
-
+app.use('/mock/matches',routes.mockMatch);
 app.listen(process.env.PORT, () =>
 	console.log(`Example app listening on port ${process.env.PORT}!`),
 );
