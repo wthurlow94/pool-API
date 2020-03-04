@@ -10,7 +10,8 @@ router.get('/', (req, res) => {
 
 router.post('/', (req, res) => {
 	
-	res.send(user.addUser());
+	console.log(req.body);
+	res.send(user.addUser(req.body.password));
 
 });
 
