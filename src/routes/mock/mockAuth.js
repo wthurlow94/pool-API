@@ -1,6 +1,9 @@
 import { Router } from 'express';
+import 'dotenv/config'
 import crypto from 'crypto';
 import mockUser from '../../mockdata/mockUser';
+import jwt from 'jsonwebtoken';
+
 const router = Router();
 
 
@@ -12,8 +15,8 @@ router.post('/', (req, res) => {
 	
 	var userArr = mockUser.findUserByMail(req.body.email);
 	if (userArr.length < 1) {
-		res.status(404).send({})
-                console.log("successful login");
+		res.status(404).send({});
+                console.log("unsuccessful login");
 	} else {
 		let user = userArr[0];
 		let passwordFields = user.password.split('$');
@@ -22,8 +25,26 @@ router.post('/', (req, res) => {
 		let newHash = crypto.createHmac('sha512',salt).update(req.body.password).digest("base64");
 
 		if (newHash === passwordFields[1]) {
+			
+			// generate and return token
+			//
+			//
+			let token = jwt.sign(
+				{
+				email: user.email
+					},
+				process.env.JWTSECRET,
+				{ 
+				expiresIn: '24h' 
+				}
+			); 
+			
 			console.log("successful login");
-			res.status(200).send(user);
+			res.json({
+				success: true,
+				message: 'Authentication successful',
+				token: token
+			});
 		} else {
 			res.status(400).send({});	
 		}	
@@ -33,7 +54,8 @@ router.post('/', (req, res) => {
 
 
 router.get('/:userId', (req, res) => {
-  console.log("Get user" + req.params.userId);
+
+
   res.send("Get user" + req.params.userId);
 });
 

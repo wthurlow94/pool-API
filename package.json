@@ -28,6 +28,10 @@
     "nodemon": "^2.0.2"
   },
   "dependencies": {
-    "dotenv": "^8.2.0"
+    "casual": "^1.6.2",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1"
   }
 }
