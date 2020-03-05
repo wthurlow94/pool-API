@@ -35,17 +35,10 @@ function users () {
 function findUserByMail (mail) {
 
 	var found = {};
-
-	found = data.users.find(function(user) {
-		if (user.email === mail) {
-			console.log(user.email);
-			console.log(mail);
-			return user;
-		} 
-		return {};
-	});
-
-
+	
+	found = data.users.filter(user => user["email"] === mail);
+	
+	
 	return found;
 }
 export default {addUser,users,findUserByMail};
