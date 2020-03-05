@@ -10,9 +10,10 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use('/user', routes.user);
-app.use('/match', routes.match);
-
+app.use('/users', routes.user);
+app.use('/mock/users', routes.mockUser);
+app.use('/mock/matches',routes.mockMatch);
+app.use('/mock/auth',routes.mockAuth);
 app.listen(process.env.PORT, () =>
 	console.log(`Example app listening on port ${process.env.PORT}!`),
 );
