@@ -16,7 +16,7 @@ casual.define('user', function () {
 const data = { users: [] };
 
 function addUser (password) {
-	console.log(password);
+	
 	let salt = crypto.randomBytes(16).toString('base64');
 	let hash = crypto.createHmac('sha512',salt).update(password).digest("base64");
 
@@ -32,6 +32,14 @@ function users () {
 
 }
 
+
+function user (id) {
+	var found = {}
+
+	found = data.users.filter(user => user["id"] === id);
+	return found;
+}
+
 function findUserByMail (mail) {
 
 	var found = {};
@@ -41,6 +49,6 @@ function findUserByMail (mail) {
 	
 	return found;
 }
-export default {addUser,users,findUserByMail};
+export default {addUser,user,users,findUserByMail};
 
 

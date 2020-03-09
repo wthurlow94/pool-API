@@ -1,50 +1,46 @@
 import { Router } from 'express';
-import jwt from 'jsonwebtoken';
+import auth from '../../controller/auth.controller.js';
 import user from '../../mockdata/mockUser';
 const router = Router();
-
+//login
 router.get('/', (req, res) => {
 	
 
-	let token = req.headers["authorization"]
-	console.log(token);
-	if (token.startsWith("Bearer ")) {
-		token = token.slice(7,token.length);
-	}
+	let token = req.headers["authorization"];
+	var json = auth.validateToken(token);
+	
 
-
-	if (token) {
-		jwt.verify(token, process.env.JWTSECRET, (err,decoded) => {
+	if (json.status === true) {
 		
-			if (err) {
-				res.json({success:false,message:"Invalid Token"}).send();
-			} else {
-				req.decoded = decoded;
-				console.log(decoded);
-				res.send(user.users())
-			}
-		});
-
+		res.json(json).send(user.users);
 	} else {
-		res.json({success:false,message:"Missing Token"}).send();
+		res.json(json).send();
 	}
-
-//  res.send(user.users());
 });
 
 
+//register new user
 router.post('/', (req, res) => {
 	
-	console.log(req.body);
 	res.send(user.addUser(req.body.password));
 
 });
 
-
+//Get User
 router.get('/:userId', (req, res) => {
-  console.log("Get user" + req.params.userId);
-  res.send("Get user" + req.params.userId);
-});
+  
+
+	let token = req.headers["authorization"];
+	var json = auth.validateToken(token);
+	
+
+	if (json.status === true) {
+		
+		res.json(json).send(user.user(req.body.id));
+	} else {
+		res.json(json).send();
+	}
+ });
 
 export default router;
 
