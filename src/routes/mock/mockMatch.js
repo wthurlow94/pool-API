@@ -15,9 +15,15 @@ router.post('/', (req, res) => {
 });
 
 
-router.get('/:userId', (req, res) => {
-  console.log("Get user" + req.params.userId);
-  res.send("Get user" + req.params.userId);
+router.patch('/:matchId', (req,res) => {
+	res.json(match.resultMatch(req.params.matchId, req.body.winnerId)).send();
+	
+});
+
+
+router.get('/:matchId', (req, res) => {
+  console.log("Get match" + req.params.userId);
+  res.send("Get match" + req.params.userId);
 });
 
 export default router;

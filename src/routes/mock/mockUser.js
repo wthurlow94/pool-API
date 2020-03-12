@@ -9,10 +9,11 @@ router.get('/', (req, res) => {
 	let token = req.headers["authorization"];
 	var json = auth.validateToken(token);
 	
-
-	if (json.status === true) {
+	console.log(json.success);
+	if (json.success === true) {
 		
-		res.json(json).send(user.users);
+		
+		res.json(json).send(user.users());
 	} else {
 		res.json(json).send();
 	}
@@ -40,7 +41,7 @@ router.get('/:userId', (req, res) => {
 	var json = auth.validateToken(token);
 	
 
-	if (json.status === true) {
+	if (json.success === true) {
 		
 		res.json(json).send(user.user(req.body.id));
 	} else {

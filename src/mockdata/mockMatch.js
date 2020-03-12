@@ -3,7 +3,7 @@ import user from './mockUser'
 casual.define('match', function () {
 	
 	return {
-		matchid:casual.integer(1,1000),
+		mid:casual.integer(1,1000),
 		p1:"",
 		p2:"",
 		started: "",
@@ -38,7 +38,7 @@ function addMatch (p1,p2) {
 	newMatch.started = Date.now();
 	
 	data.matches.push(newMatch);
-	return {"success": true, "message":"Added match"};
+	return {"success": true, "message":"Added match: "+newMatch.mid};
 }
 
 function matches () {                             
@@ -46,6 +46,65 @@ function matches () {
 	return data;
 
 }
-export default {addMatch,matches};
+
+function findMatchById (id) {
+	return data.matches.filter(match => match["mid"] === id);
+}
+
+
+function resultMatch(matchId, winnerId) {
+	
+	//check the match exists and grab it
+	var matches = findMatchById(parseInt(matchId));
+
+	if (matches.length < 1) {
+		return {"success":false, "message":"Match does not exist"}
+	}
+	
+	var matchToRes = matches[0];
+	var indexOfMatch = data.matches.indexOf(matchToRes);
+	var p1 = matchToRes.p1
+	var p2 = matchToRes.p2
+	
+	//id doesn't match either of the players
+	if (p1 != winnerId && p2 != winnerId) {
+			
+		return {"success":false,"message":"Winner is not a player in this match"}
+
+	}
+	var loserId;
+	if (p1 == winnerId) {
+		loserId = p2;
+	} else {
+		loserId = p1;
+	}
+
+	//check whether it's been resulted already?
+	
+	if (matchToRes.ended != "") {
+		return {"success":false, "message":"Match has ended"};
+	}
+
+	
+	//set the winner, and update the match reference
+	
+	matchToRes.winner = winnerId;
+	// todo: Date formatting
+	matchToRes.ended = Date.now();
+	data.matches[indexOfMatch] = matchToRes;
+
+	
+	var messages = {"messages": []};
+	
+	messages.messages.push({"success":true, "message":"Match resulted"});
+
+	messages.messages.push(user.updateELO(winnerId, loserId));
+
+
+	return messages;
+
+}
+
+export default {addMatch,matches,resultMatch};
 
 
