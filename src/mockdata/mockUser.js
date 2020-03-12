@@ -51,6 +51,12 @@ function findUserByMail (mail) {
 	
 	return found;
 }
-export default {addUser,user,users,findUserByMail};
+
+
+function findUserById (id) {
+	return data.users.filter(user => user["id"] === id);
+}
+
+export default {addUser,user,users,findUserByMail,findUserById};
 
 

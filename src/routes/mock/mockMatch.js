@@ -9,8 +9,8 @@ router.get('/', (req, res) => {
 
 
 router.post('/', (req, res) => {
-	
-	res.send(match.addMatch());
+	//todo: token check
+	res.json(match.addMatch(req.body.p1, req.body.p2)).send();
 
 });
 
