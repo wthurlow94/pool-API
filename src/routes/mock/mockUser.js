@@ -12,8 +12,8 @@ router.get('/', (req, res) => {
 	console.log(json.success);
 	if (json.success === true) {
 		
-		
-		res.json(json).send(user.users());
+		json.values= user.users();
+		res.json(json).send();
 	} else {
 		res.json(json).send();
 	}
@@ -42,8 +42,8 @@ router.get('/:userId', (req, res) => {
 	
 
 	if (json.success === true) {
-		
-		res.json(json).send(user.user(req.body.id));
+		json.value = user.user(parseInt(req.params.userId));
+		res.json(json).send();
 	} else {
 		res.json(json).send();
 	}
