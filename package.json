@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon --exec babel-node src/index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha src/test/test.js"
   },
   "repository": {
     "type": "git",
@@ -25,6 +25,7 @@
     "@babel/core": "^7.8.4",
     "@babel/node": "^7.8.4",
     "@babel/preset-env": "^7.8.4",
+    "mocha": "^7.1.0",
     "nodemon": "^2.0.2"
   },
   "dependencies": {
