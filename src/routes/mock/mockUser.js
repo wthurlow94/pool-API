@@ -1,52 +1,38 @@
 import { Router } from 'express';
-import auth from '../../controller/auth.controller.js';
-import user from '../../mockdata/mockUser';
+import auth from '../../controllers/auth.controller.js';
+import user from '../../services/mock/mockUser';
+import userController from '../../controllers/mock/user.controller';
+
 const router = Router();
-//login
+//get all users
 router.get('/', (req, res) => {
 	
 
-	let token = req.headers["authorization"];
-	var json = auth.validateToken(token);
+
+	res.json(userController.getUsers(req)).send();
 	
-	console.log(json.success);
-	if (json.success === true) {
-		
-		json.values= user.users();
-		res.json(json).send();
-	} else {
-		res.json(json).send();
-	}
 });
 
 
 //register new user
 router.post('/', (req, res) => {
 	
-	if (user.findUserByMail(req.body.email).length >= 1) {
-		// user doesn't exist
-		res.json({"success":false,"message":"Email already exists"}).send();
-		return
+
+	res.json(userController.postUser(req)).send();
+//	if (user.findUserByMail(req.body.email).length >= 1) {
+//		// user doesn't exist
+//		res.json({"success":false,"message":"Email already exists"}).send();
+//		return
 		
-	}
-	res.send(user.addUser(req.body.email,req.body.password));
+	//}
+	//res.send(user.addUser(req.body.email,req.body.password));
 
 });
 
 //Get User
 router.get('/:userId', (req, res) => {
   
-
-	let token = req.headers["authorization"];
-	var json = auth.validateToken(token);
-	
-
-	if (json.success === true) {
-		json.value = user.user(parseInt(req.params.userId));
-		res.json(json).send();
-	} else {
-		res.json(json).send();
-	}
+	res.json(userController.getUser(req)).send();
  });
 
 export default router;

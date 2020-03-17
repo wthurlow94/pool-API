@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import match from '../../mockdata/mockMatch';
+import match from '../../services/mock/mockMatch';
 const router = Router();
 
 router.get('/', (req, res) => {

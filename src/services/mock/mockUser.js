@@ -1,4 +1,6 @@
 import casual from 'casual';
+//const casual = require('casual');
+//const crypto = require('crypto');
 import crypto from 'crypto';
 
 
@@ -16,31 +18,25 @@ casual.define('user', function () {
 
 const data = { users: [] };
 
-function addUser (email, password) {
+function createUser (email, password) {
 	//todo: move password functionality to an external util
-	let salt = crypto.randomBytes(16).toString('base64');
-	let hash = crypto.createHmac('sha512',salt).update(password).digest("base64");
+	//let salt = crypto.randomBytes(16).toString('base64');
+	//let hash = crypto.createHmac('sha512',salt).update(password).digest("base64");
 
-	password = salt+"$"+hash;
+	//password = salt+"$"+hash;
 	var user = casual.user;
 	user.password = password;
 	user.email = email;
 	data.users.push(user);
-	return user;
+	return {"success":true,"message":"User Created " + user.id, "user":user};
 }
 
-function users () {                             
-	return data;
+function getUsers () {                             
+	return data.users;
 
 }
 
 
-function user (id) {
-	var found = {}
-
-	found = data.users.filter(user => user["id"] === id);
-	return found;
-}
 
 function findUserByMail (mail) {
 
@@ -82,6 +78,6 @@ function findUserById (id) {
 	return data.users.filter(user => user["id"] === id);
 }
 
-export default {addUser,user,users,findUserByMail,findUserById,updateELO};
+export default {createUser,getUsers,findUserByMail,findUserById,updateELO};
 
 

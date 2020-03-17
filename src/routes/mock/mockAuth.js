@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import 'dotenv/config'
 import crypto from 'crypto';
-import mockUser from '../../mockdata/mockUser';
+import mockUser from '../../services/mock/mockUser';
 import jwt from 'jsonwebtoken';
 
 const router = Router();

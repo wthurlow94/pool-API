@@ -1,6 +1,9 @@
 import jwt from 'jsonwebtoken'
 
-function validateToken (token) {
+function validateToken (req) {
+	var decoded;
+
+        let token = req.headers["authorization"];
 
 	// Does the token exist?
 	//
@@ -14,6 +17,7 @@ function validateToken (token) {
 				if (err) {
 					return {success:false,message:"Token is not valid"}
 				}
+				decoded = decoded;
 			});
 
 		} else {
@@ -26,8 +30,18 @@ function validateToken (token) {
 	}
 
 
-	return {success:true, message:"Token is valid"}
+	return {success:true, message:"Token is valid", decoded:decoded}
 
 }
 
-export default {validateToken};
+function hashPassword (password) {
+	let salt = crypto.randomBytes(16).toString('base64');
+	let hash = crypto.createHmac('sha512',salt).update(password).digest("base64");
+
+	return  salt + "$" + hash;
+
+}
+
+
+
+export default {validateToken, hashPassword};
