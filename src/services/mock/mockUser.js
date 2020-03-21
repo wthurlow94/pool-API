@@ -17,6 +17,20 @@ casual.define('user', function () {
 
 
 const data = { users: [] };
+var testUser = casual.user;
+testUser.email = "foo";
+testUser.password = "pass";
+data.users.push(testUser);
+
+
+
+
+
+
+
+
+
+
 
 function createUser (email, password) {
 	//todo: move password functionality to an external util
@@ -61,8 +75,8 @@ function updateELO (winnerId, loserId) {
         var expectedScoreLsr = 1 / (1 + (10 ^ ((winner.elo - loser.elo) / 400)));
 
 
-	var newEloWnr = winner.elo + (16 * (1 - expectedScoreWnr));
-	var newEloLsr = loser.elo  + (16 * (1 - expectedScoreLsr));
+	var newEloWnr = winner.elo + (32 * (1 - expectedScoreWnr));
+	var newEloLsr = loser.elo  + (32 * (0 - expectedScoreLsr));
 
 	winner.elo = Math.floor(newEloWnr);
 	loser.elo = Math.floor(newEloLsr);
@@ -70,7 +84,7 @@ function updateELO (winnerId, loserId) {
 	data.users[idxWinner] = winner;
 	data.users[idxLoser] = loser;
 	
-	return {"success": true, "message":"ELO Updated for both players"}
+	return [{'winnerId':winner.id,'winnerELO':winner.elo},{'loserID':loser.id,'loserELO':loser.elo}]
 
 }
 

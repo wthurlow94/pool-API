@@ -15,14 +15,14 @@ router.post('/', (req, res) => {
 	
 	var userArr = mockUser.findUserByMail(req.body.email);
 	if (userArr.length < 1) {
-		res.status(404).send({});
+		res.status(404).send({'success':false,'message':'User not found'});
                 console.log("unsuccessful login");
 	} else {
 		let user = userArr[0];
 		let passwordFields = user.password.split('$');
 		let salt = passwordFields[0];
 
-		let newHash = crypto.createHmac('sha512',salt).update(req.body.password).digest("base64");
+		let newHash = crypto.createHmac('sha512',salt).update(String(req.body.password)).digest("base64");
 
 		if (newHash === passwordFields[1]) {
 			

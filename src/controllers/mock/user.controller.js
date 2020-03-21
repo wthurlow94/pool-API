@@ -18,13 +18,12 @@ function getUsers (req) {
 
 // Register new user
 function postUser (req) {
-	
 	//check user exists already	
 	if (userService.findUserByMail(req.body.email).length > 0) {
 
 		return {"success":false,"message":"Email already exists"}
 	}
-	var password = auth.hashPassword(req.body.password);
+	var password = auth.hashPassword(String(req.body.password));
 	return userService.createUser(req.body.email, password);
 	
 }

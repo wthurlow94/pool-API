@@ -1,3 +1,4 @@
+import "@babel/polyfill";
 import 'dotenv/config';
 import express from 'express';
 import cors from 'cors'
@@ -17,3 +18,5 @@ app.use('/mock/auth',routes.mockAuth);
 app.listen(process.env.PORT, () =>
 	console.log(`Example app listening on port ${process.env.PORT}!`),
 );
+
+module.exports = app;

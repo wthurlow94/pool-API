@@ -38,7 +38,7 @@ function addMatch (p1,p2) {
 	newMatch.started = Date.now();
 	
 	data.matches.push(newMatch);
-	return {"success": true, "message":"Added match: "+newMatch.mid};
+	return {"success": true, "message":"Added match: "+newMatch.mid, "match":newMatch};
 }
 
 function matches () {                             
@@ -65,7 +65,6 @@ function resultMatch(matchId, winnerId) {
 	var indexOfMatch = data.matches.indexOf(matchToRes);
 	var p1 = matchToRes.p1
 	var p2 = matchToRes.p2
-	
 	//id doesn't match either of the players
 	if (p1 != winnerId && p2 != winnerId) {
 			
@@ -94,14 +93,15 @@ function resultMatch(matchId, winnerId) {
 	data.matches[indexOfMatch] = matchToRes;
 
 	
-	var messages = {"messages": []};
+	//return the match object with the result
+	//return the ELO ratings for the two players
 	
-	messages.messages.push({"success":true, "message":"Match resulted"});
+	var json = {"success":true, "message": "Match Resulted", "match":matchToRes};
+	json.elos = user.updateELO(winnerId,loserId);
+	return json;
 
-	messages.messages.push(user.updateELO(winnerId, loserId));
 
-
-	return messages;
+	//return messages;
 
 }
 
