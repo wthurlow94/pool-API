@@ -1,31 +1,37 @@
 import { Router } from 'express';
+import auth from '../controllers/auth.controller';
+import userController from '../controllers/user.controller';
 
 const router = Router();
-
+//get all users
 router.get('/', (req, res) => {
-  console.log("Get Users");
-  res.send("Get Users");
-});
-
-//create new user
-router.post('/', (req,res) => {
-	// step one
-	// Check to see if the username already exists
-	// if it does then return an error message as a response "Username already exists"
-
-	// step two
-	// Generate Insert SQL - use stored Proc?
 	
-	// step three - on creation completion - respond with userID
 
-	res.send(req.body.username +" "+req.body.password);
+	userController.getUsers(req,res);
+	
 });
 
 
+//register new user
+router.post('/', (req, res) => {
+	
 
+	userController.postUser(req,res);
+//	if (user.findUserByMail(req.body.email).length >= 1) {
+//		// user doesn't exist
+//		res.json({"success":false,"message":"Email already exists"}).send();
+//		return
+		
+	//}
+	//res.send(user.addUser(req.body.email,req.body.password));
+
+});
+
+//Get User
 router.get('/:userId', (req, res) => {
-  console.log("Get user" + req.params.userId);
-  res.send("Get user" + req.params.userId);
-});
+  
+	userController.getUser(req,res);
+ });
 
 export default router;
+

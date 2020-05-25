@@ -1,6 +1,6 @@
-import userService from '../../services/mock/mockUser'
+//import userService from '../../services/mock/mockUser'
 import auth from '../../controllers/auth.controller'
-
+import userService from '../../services/userService'
 //Get all users
 function getUsers (req) {
 

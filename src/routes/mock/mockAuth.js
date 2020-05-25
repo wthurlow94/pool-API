@@ -18,6 +18,8 @@ router.post('/', (req, res) => {
 		res.status(404).send({'success':false,'message':'User not found'});
                 console.log("unsuccessful login");
 	} else {
+	// need to redo this for non-mock service: https://stackoverflow.com/questions/43092071/how-should-i-store-salts-and-passwords-in-mongodb
+		
 		let user = userArr[0];
 		let passwordFields = user.password.split('$');
 		let salt = passwordFields[0];
